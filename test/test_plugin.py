@@ -6,10 +6,10 @@ from qgis.core import QgsRasterLayer
 def test_plugin(qgis_processing,qgis_iface):
     import shift
 
-    x_min = 776302
-    y_min=214895
-    x_max=831861
-    y_max= 254345
+    x_min = 776000
+    y_min=214000
+    x_max=831000
+    y_max= 254000
 
     x_shift=50000
     y_shift=-10000
