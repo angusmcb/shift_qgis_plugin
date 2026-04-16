@@ -1,0 +1,4 @@
+[tool.qgis-plugin-ci]
+plugin_path = "shift"
+github_organization_slug = "angusmcb"
+project_slug = "shift_qgis_plugin"
