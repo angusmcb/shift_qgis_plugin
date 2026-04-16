@@ -23,4 +23,5 @@ jobs:
         run: >-
           qgis-plugin-ci
           release ${GITHUB_REF/refs\/tags\//}
+          --github-token ${{ secrets.GITHUB_TOKEN }}
           --disable-submodule-update
