@@ -1,0 +1,16 @@
+[general]
+name=Shift
+version=1.0.0
+qgisMinimumVersion=3.34.0
+qgisMaximumVersion=4.99
+author=Angus McBride
+email=angusmcb@gmail.com
+changelog=
+tags= raster, move, shift, deplace, processing, georeference
+repository=
+tracker=
+homepage=
+category=Raster
+deprecated=False
+description=Shift or move raster layers
+about=Shift or move raster layers
