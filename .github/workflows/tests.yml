@@ -5,6 +5,7 @@ name: Tests
 # events but only for the wanted branches
 on: push
 
+jobs:
 
   linux_docker_tests:
     runs-on: ubuntu-latest
