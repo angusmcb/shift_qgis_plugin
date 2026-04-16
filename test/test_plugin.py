@@ -2,6 +2,7 @@
 
 from qgis import processing
 
+
 def test_plugin(qgis_processing,qgis_iface):
     import shift
 
@@ -17,7 +18,7 @@ def test_plugin(qgis_processing,qgis_iface):
 
     plugin.initGui()
 
-    create_outputs = processing.run("native:createrandomnormalrasterlayer", {'EXTENT':f'{x_min},{x_max},{y_min},{y_max} [EPSG:27562]','TARGET_CRS':QgsCoordinateReferenceSystem('EPSG:27562'),'PIXEL_SIZE':1000,'OUTPUT_TYPE':0,'MEAN':0,'STDDEV':1,'CREATION_OPTIONS':None,'OUTPUT':'TEMPORARY_OUTPUT'})
+    create_outputs = processing.run("native:createrandomnormalrasterlayer", {'EXTENT':f'{x_min},{x_max},{y_min},{y_max} [EPSG:27562]','TARGET_CRS':'EPSG:27562','PIXEL_SIZE':1000,'OUTPUT_TYPE':0,'MEAN':0,'STDDEV':1,'CREATION_OPTIONS':None,'OUTPUT':'TEMPORARY_OUTPUT'})
 
     initial_raster=create_outputs['OUTPUT']
 
