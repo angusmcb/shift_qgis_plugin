@@ -123,8 +123,10 @@ class ShiftAlgorithm(QgsProcessingAlgorithm):
 
         from osgeo import gdal
 
-        with gdal.Open(source_path) as input_raster:
-            extent = input_raster.GetExtent()
+        # with gdal.Open(source_path) as input_raster:
+        #     extent = input_raster.GetExtent()
+
+        extent = source_layer.extent()
 
         destination_path = self.parameterAsOutputLayer(parameters, self.OUTPUT, context)
 
@@ -133,10 +135,10 @@ class ShiftAlgorithm(QgsProcessingAlgorithm):
             destination_path,
             source_path,
             outputBounds=[
-                extent[0] + x_shift,
-                extent[3] + y_shift,
-                extent[1] + x_shift,
-                extent[2] + y_shift,
+                extent.xMinimum() + x_shift,
+                extent.yMaximum() + y_shift,
+                extent.xMaximum() + x_shift,
+                extent.yMinimum() + y_shift,
             ],
         )
 

@@ -1,7 +1,7 @@
 
 
 from qgis import processing
-
+from qgis.core import QgsRasterLayer
 
 def test_plugin(qgis_processing,qgis_iface):
     import shift
