@@ -25,3 +25,4 @@ jobs:
           release ${GITHUB_REF/refs\/tags\//}
           --github-token ${{ secrets.GITHUB_TOKEN }}
           --disable-submodule-update
+          --qgis-token ${{ secrets.QGIS_TOKEN }}
