@@ -1,0 +1,21 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Raster (2x2 seamless, Material tones) -->
+  <rect x="6"  y="14" width="24" height="24" fill="#4A90E2"/>
+  <rect x="30" y="14" width="24" height="24" fill="#5AA0EA"/>
+  <rect x="6"  y="38" width="24" height="24" fill="#3F86D8"/>
+  <rect x="30" y="38" width="24" height="24" fill="#67A9F0"/>
+
+  <!-- Material-style export arrow (overlapping raster for "move out") -->
+  <path d="
+    M18 30
+    H38
+    V26
+    L54 32
+    L38 38
+    V34
+    H18
+    Z"
+    fill="#1F1F1F"/>
+
+</svg>

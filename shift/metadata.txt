@@ -1,5 +1,5 @@
 [general]
-name=Shift
+name=Shift Raster
 version=1.0.0
 qgisMinimumVersion=3.34.0
 qgisMaximumVersion=4.99
@@ -12,5 +12,13 @@ tracker=
 homepage=
 category=Raster
 deprecated=False
-description=Shift or move raster layers
-about=Shift or move raster layers
+description=Move a raster layer by specified amounts in the X and Y directions
+about=A processing algorithm for moving a raster layer. 
+
+    Once installed you will find the tool in the processing toolbox.
+
+    The x and y values will be in the same units as the coordinate refence system of the layer. (i.e. if the layer is in a metre-based CRS, x and y will move will be in metres; if in degrees it will be in degrees)
+
+    Compatible with batch processing if you want to move lots of rasters at the same time.
+
+    Works on all rasters that open with gdal (that's most rasters in qgis, but not web maps for example)

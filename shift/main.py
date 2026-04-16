@@ -1,46 +1,70 @@
+from pathlib import Path
+from typing import Any, Optional
+
 from qgis.core import (
-    QgsProcessingProvider,
     QgsApplication,
-    QgsProcessingParameterRasterLayer,
-    QgsProcessingParameterNumber,
     QgsProcessingAlgorithm,
     QgsProcessingContext,
     QgsProcessingFeedback,
+    QgsProcessingParameterNumber,
     QgsProcessingParameterRasterDestination,
+    QgsProcessingParameterRasterLayer,
+    QgsProcessingProvider,
 )
+from qgis.processing import execAlgorithmDialog
+from qgis.PyQt.QtGui import QIcon
+from qgis.PyQt.QtWidgets import QAction
 
-from typing import Any
+ICON = QIcon(str(Path(__file__).parent / "shift_logo.svg"))
 
 
 class ShiftPlugin:
     def __init__(self, iface) -> None:
-        pass
+        self.iface = iface
+        self.provider: Optional["ShiftProvider"] = None
+        self.action = None
 
     def initGui(self) -> None:  # noqa N802
         self.initProcessing()
+        self.initRasterMenuAction()
 
     def initProcessing(self) -> None:  # noqa: N802
-        """Initialize the processing provider."""
-
         self.provider = ShiftProvider()
         QgsApplication.processingRegistry().addProvider(self.provider)
 
+    def initRasterMenuAction(self) -> None:  # noqa: N802
+        action = QAction(ICON, "Shift raster...", self.iface.mainWindow())
+        action.triggered.connect(self.openAlgorithmDialog)
+        self.action = action
+
+        self.iface.rasterMenu().addAction(action)
+
+    def openAlgorithmDialog(self) -> None:  # noqa: N802
+
+        execAlgorithmDialog(ShiftAlgorithm(), {})
+
     def unload(self):
-        QgsApplication.processingRegistry().removeProvider(self.provider)
+        if self.action is not None:
+            self.iface.rasterMenu().removeAction(self.action)
+            self.action = None
+
+        if self.provider is not None:
+            QgsApplication.processingRegistry().removeProvider(self.provider)
+            self.provider = None
 
 
 class ShiftProvider(QgsProcessingProvider):
-    """Processing provider class."""
-
     def loadAlgorithms(self):
-        """Loads all algorithms belonging to this provider."""
         self.addAlgorithm(ShiftAlgorithm())
 
     def id(self) -> str:
         return "shift"
 
     def name(self) -> str:
-        return "Shift"
+        return "Shift Raster"
+
+    def icon(self) -> QIcon:
+        return ICON
 
 
 class ShiftAlgorithm(QgsProcessingAlgorithm):
@@ -56,7 +80,21 @@ class ShiftAlgorithm(QgsProcessingAlgorithm):
         return "shift"
 
     def displayName(self):
-        return "Shift"
+        return "Shift Raster"
+
+    def icon(self):
+        return ICON
+
+    def shortHelpString(self):
+        return """
+            Shifts the coordinates of a raster by a specified amount in the X and Y directions.     
+            
+            The x and y values will be in the same units as the coordinate refence system of the layer. (i.e. if the layer is in a metre-based CRS, x and y will move will be in metres; if in degrees it will be in degrees)
+
+            Compatible with batch processing if you want to move lots of rasters at the same time.
+
+            Works on all rasters that open with gdal (that's most rasters in qgis, but not web maps for example)
+            """
 
     def initAlgorithm(self, config=None):  # noqa N802
         self.addParameter(QgsProcessingParameterRasterLayer(self.INPUT, "Input Raster"))
@@ -64,7 +102,7 @@ class ShiftAlgorithm(QgsProcessingAlgorithm):
             QgsProcessingParameterNumber(self.X_SHIFT, "Shift X Coordinates by")
         )
         self.addParameter(
-            QgsProcessingParameterNumber(self.Y_SHIFT, "Shift Y Coordinates byt")
+            QgsProcessingParameterNumber(self.Y_SHIFT, "Shift Y Coordinates by")
         )
         self.addParameter(
             QgsProcessingParameterRasterDestination(self.OUTPUT, "Output Raster")
@@ -93,7 +131,7 @@ class ShiftAlgorithm(QgsProcessingAlgorithm):
         # assigned output bounds: [ulx, uly, lrx, lry]
         gdal.Translate(
             destination_path,
-            source,
+            source_path,
             outputBounds=[
                 extent[0] + x_shift,
                 extent[3] + y_shift,
