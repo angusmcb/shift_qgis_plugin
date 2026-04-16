@@ -9,6 +9,7 @@ changelog=
 tags= raster, move, shift, deplace, processing, georeference
 repository=
 tracker=
+icon=shift_logo.svg
 homepage=
 category=Raster
 deprecated=False
