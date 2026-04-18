@@ -99,15 +99,31 @@ class ShiftAlgorithm(QgsProcessingAlgorithm):
             """
 
     def initAlgorithm(self, config=None):  # noqa N802
-        self.addParameter(QgsProcessingParameterRasterLayer(self.INPUT, "Input Raster"))
         self.addParameter(
-            QgsProcessingParameterNumber(self.X_SHIFT, "Shift X Coordinates by")
+            QgsProcessingParameterRasterLayer(
+                self.INPUT,
+                "Input Raster",
+            )
         )
         self.addParameter(
-            QgsProcessingParameterNumber(self.Y_SHIFT, "Shift Y Coordinates by")
+            QgsProcessingParameterNumber(
+                self.X_SHIFT,
+                "Shift X Coordinates by",
+                type=QgsProcessingParameterNumber.Double,
+            )
         )
         self.addParameter(
-            QgsProcessingParameterRasterDestination(self.OUTPUT, "Output Raster")
+            QgsProcessingParameterNumber(
+                self.Y_SHIFT,
+                "Shift Y Coordinates by",
+                type=QgsProcessingParameterNumber.Double,
+            )
+        )
+        self.addParameter(
+            QgsProcessingParameterRasterDestination(
+                self.OUTPUT,
+                "Output Raster",
+            )
         )
 
     def processAlgorithm(  # noqa N802
